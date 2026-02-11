@@ -1,168 +1,91 @@
-import React, { useState } from "react";
-import { createPayment } from "./services/sonicpesa";
-import Swal from "sweetalert2";
-
-interface PaymentForm {
-  name: string;
-  email: string;
-  phone: string;
-  amount: number;
-}
-
-interface PaymentData {
-    name: string;
-    email: string;
-    phone: string;
-    amount: number;
-}
-
-interface PaymentResponse {
-    success: boolean;
-    message: string;
-    data?: unknown | any;
-}
+import React from "react";
+import "./App.css";
 
 const App: React.FC = () => {
-  const [formData, setFormData] = useState<PaymentForm>({
-    name: "",
-    email: "",
-    phone: "",
-    amount: 1000,
-  });
-
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handlePayment = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setMessage("");
-
-    try {
-      const paymentData: PaymentData = {
-          phone: formData.phone,
-          amount: formData.amount,
-          name: formData.name,
-          email: formData.email,
-      };
-      const res: PaymentResponse = await createPayment(paymentData)
-      console.log("Response: ", res)
-      if (res.success === true) {
-        Swal.fire({
-          title: "Payment initiated successfully",
-          text: `notification sent to your number. transaction_id: ${res.data.transaction_id}`,
-          icon: "success"
-        });
-      }
-      if (res.success === false) {
-        Swal.fire({
-          title: "Payment initiated fail",
-          text: `${res.message}`,
-          icon: "warning"
-        });
-      }
-    } catch (error) {
-      console.log("Error: ", error)
-      Swal.fire({
-        title: 'Payment failed',
-        text: `${error}`,
-        icon: 'info',
-      });
-
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
-      <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold mb-6 text-center text-indigo-600">
-          Make a Payment
-        </h2>
-
-        <form onSubmit={handlePayment} className="space-y-4">
-          <div>
-            <label className="block text-gray-700 mb-1">Full Name</label>
-            <input
-              type="text"
-              name="name"
-              placeholder="John Doe"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
-
-          <div>
-            <label className="block text-gray-700 mb-1">Email</label>
-            <input
-              type="email"
-              name="email"
-              placeholder="example@gmail.com"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
-
-          <div>
-            <label className="block text-gray-700 mb-1">Phone Number</label>
-            <input
-              type="tel"
-              name="phone"
-              placeholder="255657779003"
-              value={formData.phone}
-              onChange={handleChange}
-              required
-              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
-
-          <div>
-            <label className="block text-gray-700 mb-1">Amount (TZS)</label>
-            <input
-              type="number"
-              name="amount"
-              placeholder="5000"
-              value={formData.amount}
-              onChange={handleChange}
-              required
-              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className={`w-full py-2 rounded-lg text-white font-semibold transition ${
-              loading
-                ? "bg-indigo-400 cursor-not-allowed"
-                : "bg-indigo-600 hover:bg-indigo-700"
-            }`}
-          >
-            {loading ? "Processing..." : "Pay Now"}
-          </button>
-        </form>
-
-        {message && (
-          <p
-            className={`mt-4 text-center font-medium ${
-              message.includes("✅") ? "text-green-600" : "text-red-600"
-            }`}
-          >
-            {message}
-          </p>
-        )}
-      </div>
+    <div className="App">
+      <Navbar />
+      <Hero />
+      <Features />
+      <About />
+      <CTA />
+      <Footer />
     </div>
   );
 };
+
+const Navbar: React.FC = () => (
+  <nav className="navbar">
+    <div className="logo">JayTech</div>
+    <ul className="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button className="nav-btn">Get Started</button>
+  </nav>
+);
+
+const Hero: React.FC = () => (
+  <section className="hero" id="home">
+    <div className="hero-content">
+      <h1>Build Modern Websites with Confidence</h1>
+      <p>
+        Tunakusaidia kujenga website za kisasa kwa kutumia React, TypeScript,
+        JavaScript na teknolojia za kisasa.
+      </p>
+      <div className="hero-buttons">
+        <button className="primary-btn">Explore</button>
+        <button className="secondary-btn">Learn More</button>
+      </div>
+    </div>
+  </section>
+);
+
+const Features: React.FC = () => (
+  <section className="features" id="features">
+    <h2>Our Features</h2>
+    <div className="feature-grid">
+      <div className="card">
+        <h3>Fast Performance</h3>
+        <p>Website zako zitakuwa na speed ya juu na optimized vizuri.</p>
+      </div>
+      <div className="card">
+        <h3>Responsive Design</h3>
+        <p>Inaonekana vizuri kwenye simu, tablet na desktop.</p>
+      </div>
+      <div className="card">
+        <h3>Secure System</h3>
+        <p>Tunatumia best practices za security kulinda data zako.</p>
+      </div>
+    </div>
+  </section>
+);
+
+const About: React.FC = () => (
+  <section className="about" id="about">
+    <div className="about-content">
+      <h2>About Us</h2>
+      <p>
+        Sisi ni team ya developers tunaojishughulisha na kutengeneza web
+        applications za kisasa, scalable na secure.
+      </p>
+    </div>
+  </section>
+);
+
+const CTA: React.FC = () => (
+  <section className="cta" id="contact">
+    <h2>Ready to Start Your Project?</h2>
+    <button className="primary-btn">Contact Us</button>
+  </section>
+);
+
+const Footer: React.FC = () => (
+  <footer className="footer">
+    <p>© {new Date().getFullYear()} JayTech. All rights reserved.</p>
+  </footer>
+);
 
 export default App;
