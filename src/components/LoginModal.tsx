@@ -1,4 +1,3 @@
-
 // src/components/LoginModal.tsx
 import React from "react";
 
@@ -15,26 +14,27 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
         left: 0,
         width: "100vw",
         height: "100vh",
-        backgroundColor: "rgba(0, 0, 0, 0.65)",
+        backgroundColor: "rgba(0, 0, 0, 0.75)",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         zIndex: 2000,
-        backdropFilter: "blur(4px)",
-        WebkitBackdropFilter: "blur(4px)",
+        backdropFilter: "blur(6px)",
+        WebkitBackdropFilter: "blur(6px)",
       }}
     >
       <div
         className="auth-modal"
         style={{
-          backgroundColor: "white",
+          backgroundColor: "#1e293b", // slate-800
+          color: "#f1f5f9",
           borderRadius: "16px",
           width: "90%",
           maxWidth: "420px",
           padding: "32px",
-          boxShadow: "0 20px 50px rgba(0, 0, 0, 0.25)",
+          boxShadow: "0 20px 50px rgba(0, 0, 0, 0.4)",
           position: "relative",
-          animation: "fadeIn 0.3s ease",
+          border: "1px solid #334155",
         }}
       >
         <button
@@ -43,39 +43,41 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
             position: "absolute",
             top: "16px",
             right: "16px",
-            background: "none",
+            background: "rgba(148, 163, 184, 0.1)",
             border: "none",
-            fontSize: "1.4rem",
-            cursor: "pointer",
-            color: "#94a3b8",
             width: "32px",
             height: "32px",
+            borderRadius: "50%",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            borderRadius: "50%",
+            cursor: "pointer",
+            color: "#cbd5e1",
+            fontSize: "1.2rem",
             transition: "background 0.2s",
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.background = "#f1f5f9")}
-          onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+          onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(148, 163, 184, 0.2)")}
+          onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(148, 163, 184, 0.1)")}
         >
           &times;
         </button>
 
         <div style={{ textAlign: "center", marginBottom: "28px" }}>
-          <h2 style={{ margin: 0, fontSize: "1.8rem", color: "#0f172a", fontWeight: "700" }}>Welcome back</h2>
-          <p style={{ color: "#64748b", marginTop: "6px" }}>Sign in to your PayTech account</p>
+          <h2 style={{ margin: 0, fontSize: "1.8rem", fontWeight: "700", color: "#f1f5f9" }}>
+            Welcome back
+          </h2>
+          <p style={{ color: "#94a3b8", marginTop: "6px" }}>Sign in to your PayTech dashboard</p>
         </div>
 
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            alert("Login functionality would go here.");
+            alert("Login successful!");
             onClose();
           }}
         >
           <div style={{ marginBottom: "20px" }}>
-            <label style={{ display: "block", marginBottom: "8px", fontWeight: "600", color: "#1e293b" }}>
+            <label style={{ display: "block", marginBottom: "8px", fontWeight: "600", color: "#e2e8f0" }}>
               Email Address
             </label>
             <input
@@ -84,25 +86,27 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
               style={{
                 width: "100%",
                 padding: "12px 14px",
-                border: "1px solid #e2e8f0",
+                background: "rgba(15, 23, 42, 0.6)", // slate-900/60
+                border: "1px solid #334155",
                 borderRadius: "10px",
                 fontSize: "1rem",
-                transition: "border 0.3s, box-shadow 0.3s",
+                color: "#f1f5f9",
+                outline: "none",
               }}
-              onFocus={(e) => (e.currentTarget.style.border = "1px solid #0d6efd")}
-              onBlur={(e) => (e.currentTarget.style.border = "1px solid #e2e8f0")}
+              onFocus={(e) => (e.currentTarget.style.border = "1px solid #60a5fa")}
+              onBlur={(e) => (e.currentTarget.style.border = "1px solid #334155")}
             />
           </div>
 
           <div style={{ marginBottom: "24px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
-              <label style={{ fontWeight: "600", color: "#1e293b" }}>Password</label>
+              <label style={{ fontWeight: "600", color: "#e2e8f0" }}>Password</label>
               <a
                 href="#"
-                style={{ color: "#0d6efd", fontSize: "0.9rem", textDecoration: "none" }}
+                style={{ color: "#818cf8", fontSize: "0.9rem", textDecoration: "none" }}
                 onClick={(e) => {
                   e.preventDefault();
-                  alert("Password reset flow would open here.");
+                  alert("Password reset instructions sent.");
                 }}
               >
                 Forgot?
@@ -114,13 +118,15 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
               style={{
                 width: "100%",
                 padding: "12px 14px",
-                border: "1px solid #e2e8f0",
+                background: "rgba(15, 23, 42, 0.6)",
+                border: "1px solid #334155",
                 borderRadius: "10px",
                 fontSize: "1rem",
-                transition: "border 0.3s, box-shadow 0.3s",
+                color: "#f1f5f9",
+                outline: "none",
               }}
-              onFocus={(e) => (e.currentTarget.style.border = "1px solid #0d6efd")}
-              onBlur={(e) => (e.currentTarget.style.border = "1px solid #e2e8f0")}
+              onFocus={(e) => (e.currentTarget.style.border = "1px solid #60a5fa")}
+              onBlur={(e) => (e.currentTarget.style.border = "1px solid #334155")}
             />
           </div>
 
@@ -129,46 +135,37 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
             style={{
               width: "100%",
               padding: "13px",
-              backgroundColor: "#0d6efd",
+              background: "linear-gradient(90deg, #4f46e5, #60a5fa)",
               color: "white",
               border: "none",
               borderRadius: "10px",
               fontSize: "1.05rem",
               fontWeight: "600",
               cursor: "pointer",
-              transition: "background 0.3s",
+              transition: "opacity 0.3s",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#0b5ed7")}
-            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#0d6efd")}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
           >
             Sign In
           </button>
         </form>
 
-        <div style={{ textAlign: "center", marginTop: "24px", color: "#64748b", fontSize: "0.95rem" }}>
+        <div style={{ textAlign: "center", marginTop: "24px", color: "#94a3b8", fontSize: "0.95rem" }}>
           Don’t have an account?{" "}
           <span
             style={{
-              color: "#0d6efd",
+              color: "#818cf8",
               fontWeight: "600",
               cursor: "pointer",
               textDecoration: "underline",
             }}
-            onClick={() => {
-              alert("Registration flow would open here.");
-            }}
+            onClick={() => alert("Registration flow would open here.")}
           >
             Create one
           </span>
         </div>
       </div>
-
-      <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: scale(0.95); }
-          to { opacity: 1; transform: scale(1); }
-        }
-      `}</style>
     </div>
   );
 };
