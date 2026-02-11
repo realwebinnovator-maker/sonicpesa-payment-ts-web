@@ -1,162 +1,80 @@
-import React, { useState } from "react";
+// src/App.tsx
+import React from "react";
+import Header from "./pages/Header";
+import Footer from "./pages/Footer";
 
 const App: React.FC = () => {
   return (
-    <div style={{ fontFamily: "Arial, sans-serif" }}>
+    <div style={{ fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif", minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       <Header />
-      <main style={{ padding: "50px", textAlign: "center" }}>
-        <h1>Welcome to PayTech</h1>
-        <p>Your seamless payment integration solution.</p>
-      </main>
-    </div>
-  );
-};
+      
+      <main style={{ flex: 1, padding: "60px 20px", textAlign: "center", backgroundColor: "#f9fafb" }}>
+        <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+          <h1 style={{ fontSize: "2.8rem", fontWeight: "700", color: "#1e293b", marginBottom: "20px" }}>
+            Welcome to <span style={{ color: "#0d6efd" }}>PayTech</span>
+          </h1>
+          <p style={{ fontSize: "1.2rem", color: "#475569", lineHeight: 1.6, marginBottom: "40px" }}>
+            The future of seamless, secure, and scalable payment integrations for businesses of all sizes.
+          </p>
 
-const Header: React.FC = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
-
-  return (
-    <header
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "10px 30px",
-        backgroundColor: "#0d6efd",
-        color: "white",
-        position: "sticky",
-        top: 0,
-        zIndex: 1000,
-        boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
-      }}
-    >
-      {/* Left: Menu icon + Company Name */}
-      <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
-        {/* Menu Icon */}
-        <div
-          style={{
-            width: "30px",
-            height: "30px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-around",
-            cursor: "pointer",
-          }}
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          <span style={{ height: "3px", background: "white", borderRadius: "2px" }}></span>
-          <span style={{ height: "3px", background: "white", borderRadius: "2px" }}></span>
-          <span style={{ height: "3px", background: "white", borderRadius: "2px" }}></span>
-        </div>
-
-        {/* Company Name */}
-        <div style={{ fontSize: "1.8rem", fontWeight: "bold" }}>PayTech</div>
-
-        {/* Menu Dropdown */}
-        {menuOpen && (
-          <div
-            style={{
-              position: "absolute",
-              top: "60px",
-              left: "10px",
-              backgroundColor: "white",
-              color: "#0d6efd",
-              boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
-              borderRadius: "8px",
-              overflow: "hidden",
-              minWidth: "160px",
-            }}
-          >
-            {[
-              { label: "Home", href: "#home" },
-              { label: "Features", href: "#features" },
-              { label: "About", href: "#about" },
-              { label: "Contact", href: "#contact" },
-              { label: "Login", href: "/login" },
-              { label: "Register", href: "/register" },
-            ].map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
+          <section style={{ textAlign: "left", marginTop: "50px", padding: "30px", backgroundColor: "white", borderRadius: "12px", boxShadow: "0 4px 12px rgba(0,0,0,0.05)" }}>
+            <h2 style={{ fontSize: "1.8rem", color: "#0f172a", marginBottom: "20px" }}>How PayTech Works</h2>
+            <p style={{ color: "#334155", lineHeight: 1.7, marginBottom: "20px" }}>
+              PayTech provides a unified API that connects your platform to multiple global payment gateways — including Stripe, PayPal, M-Pesa, Flutterwave, and more — through a single integration.
+            </p>
+            <ul style={{ textAlign: "left", paddingLeft: "20px", color: "#475569", lineHeight: 1.8 }}>
+              <li><strong>Unified Checkout:</strong> One embeddable widget supports cards, mobile money, bank transfers, and digital wallets.</li>
+              <li><strong>Real-time Settlements:</strong> Funds are settled instantly or within 24 hours based on your region.</li>
+              <li><strong>Fraud Protection:</strong> AI-powered risk scoring and 3D Secure 2.0 compliance.</li>
+              <li><strong>Developer-Friendly:</strong> RESTful APIs, webhooks, sandbox testing, and detailed documentation.</li>
+              <li><strong>Global Compliance:</strong> PCI-DSS Level 1 certified, GDPR-ready, and supports local tax rules.</li>
+            </ul>
+            <div style={{ marginTop: "30px", display: "flex", gap: "15px", justifyContent: "center", flexWrap: "wrap" }}>
+              <button
                 style={{
-                  display: "block",
-                  padding: "10px 15px",
-                  textDecoration: "none",
-                  color: "#0d6efd",
-                  backgroundColor: "white",
-                  borderBottom: "1px solid #ddd",
+                  padding: "12px 28px",
+                  backgroundColor: "#0d6efd",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "8px",
+                  fontSize: "1rem",
+                  fontWeight: "600",
+                  cursor: "pointer",
+                  transition: "background 0.3s",
                 }}
-                onClick={() => setMenuOpen(false)}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#0b5ed7")}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#0d6efd")}
               >
-                {item.label}
-              </a>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Right: User Icon */}
-      <div style={{ position: "relative" }}>
-        <div
-          style={{
-            width: "35px",
-            height: "35px",
-            borderRadius: "50%",
-            backgroundColor: "white",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            color: "#0d6efd",
-            fontWeight: "bold",
-            fontSize: "1.2rem",
-            cursor: "pointer",
-          }}
-          onClick={() => setUserMenuOpen(!userMenuOpen)}
-        >
-          U
+                Get Started
+              </button>
+              <button
+                style={{
+                  padding: "12px 28px",
+                  backgroundColor: "transparent",
+                  color: "#0d6efd",
+                  border: "2px solid #0d6efd",
+                  borderRadius: "8px",
+                  fontSize: "1rem",
+                  fontWeight: "600",
+                  cursor: "pointer",
+                  transition: "all 0.3s",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = "#ecf0ff";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "transparent";
+                }}
+              >
+                View Docs
+              </button>
+            </div>
+          </section>
         </div>
+      </main>
 
-        {userMenuOpen && (
-          <div
-            style={{
-              position: "absolute",
-              top: "45px",
-              right: 0,
-              backgroundColor: "white",
-              color: "#0d6efd",
-              boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
-              borderRadius: "8px",
-              overflow: "hidden",
-              minWidth: "120px",
-            }}
-          >
-            <a
-              href="/login"
-              style={{
-                display: "block",
-                padding: "10px 15px",
-                textDecoration: "none",
-                color: "#0d6efd",
-              }}
-            >
-              Login
-            </a>
-            <a
-              href="/register"
-              style={{
-                display: "block",
-                padding: "10px 15px",
-                textDecoration: "none",
-                color: "#0d6efd",
-              }}
-            >
-              Register
-            </a>
-          </div>
-        )}
-      </div>
-    </header>
+      <Footer />
+    </div>
   );
 };
 
