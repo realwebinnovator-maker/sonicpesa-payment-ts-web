@@ -13,7 +13,7 @@ const Header: React.FC = () => {
       if (!target.closest('.menu-trigger') && !target.closest('.mobile-menu')) {
         setMobileMenuOpen(false);
       }
-      if (!target.closest('.auth-modal')) {
+      if (!target.closest('.user-icon') && !target.closest('.auth-modal')) {
         setLoginModalOpen(false);
       }
     };
@@ -31,7 +31,7 @@ const Header: React.FC = () => {
         alignItems: "center",
         padding: "16px 24px",
         backgroundColor: "#0f172a", // slate-900
-        color: "#e2e8f0", // slate-200
+        color: "#e2e8f0",
         position: "sticky",
         top: 0,
         zIndex: 1000,
@@ -56,7 +56,7 @@ const Header: React.FC = () => {
             key={i}
             style={{
               height: "2px",
-              background: "#cbd5e1", // slate-300
+              background: "#cbd5e1",
               borderRadius: "2px",
               transition: "all 0.3s",
             }}
@@ -78,14 +78,18 @@ const Header: React.FC = () => {
         PayTech
       </div>
 
-      {/* Kulia: User Icon */}
+      {/* Kulia: User Icon — SAHIHI SANA HAPA */}
       <div
-        onClick={() => setLoginModalOpen(true)}
+        className="user-icon" // ← HII NI MUHIMU KWA CLICK OUTSIDE
+        onClick={(e) => {
+          e.stopPropagation(); // Zima propagation ili isifungue mobile menu
+          setLoginModalOpen(true);
+        }}
         style={{
           width: "38px",
           height: "38px",
           borderRadius: "50%",
-          background: "rgba(148, 163, 184, 0.15)", // slate-400/15
+          background: "rgba(148, 163, 184, 0.15)",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -112,35 +116,6 @@ const Header: React.FC = () => {
         </svg>
       </div>
 
-      {/* Desktop Navigation (Hidden on mobile) */}
-      <nav
-        style={{
-          position: "absolute",
-          left: "50%",
-          transform: "translateX(-50%)",
-          display: "none",
-        }}
-      >
-        {navItems.map((item) => (
-          <a
-            key={item}
-            href={`#${item.toLowerCase()}`}
-            style={{
-              color: "#cbd5e1",
-              margin: "0 12px",
-              textDecoration: "none",
-              fontSize: "0.95rem",
-              fontWeight: "500",
-              transition: "color 0.2s",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#818cf8")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "#cbd5e1")}
-          >
-            {item}
-          </a>
-        ))}
-      </nav>
-
       {/* Mobile Menu (Sidebar) */}
       {mobileMenuOpen && (
         <>
@@ -163,7 +138,7 @@ const Header: React.FC = () => {
               left: 0,
               width: "280px",
               height: "100vh",
-              backgroundColor: "#1e293b", // slate-800
+              backgroundColor: "#1e293b",
               color: "#f1f5f9",
               padding: "80px 20px 30px",
               display: "flex",
@@ -197,7 +172,7 @@ const Header: React.FC = () => {
         </>
       )}
 
-      {/* Login Modal */}
+      {/* Login Modal — Inafunguliwa kwa click kwenye user icon */}
       {loginModalOpen && <LoginModal onClose={() => setLoginModalOpen(false)} />}
     </header>
   );
