@@ -81,4 +81,5 @@ const Footer: React.FC = () => {
   );
 };
 
+// ✅ HII PIA NI MUHIMU!
 export default Footer;
