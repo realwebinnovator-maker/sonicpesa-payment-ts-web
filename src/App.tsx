@@ -13,6 +13,7 @@ const App: React.FC = () => {
 };
 
 const Header: React.FC = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   return (
@@ -30,11 +31,8 @@ const Header: React.FC = () => {
         boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
       }}
     >
-      {/* Company Name */}
-      <div style={{ fontSize: "1.8rem", fontWeight: "bold" }}>PayTech</div>
-
-      {/* Right Icons */}
-      <div style={{ display: "flex", alignItems: "center", gap: "20px", position: "relative" }}>
+      {/* Left: Menu icon + Company Name */}
+      <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
         {/* Menu Icon */}
         <div
           style={{
@@ -45,81 +43,118 @@ const Header: React.FC = () => {
             justifyContent: "space-around",
             cursor: "pointer",
           }}
+          onClick={() => setMenuOpen(!menuOpen)}
         >
           <span style={{ height: "3px", background: "white", borderRadius: "2px" }}></span>
           <span style={{ height: "3px", background: "white", borderRadius: "2px" }}></span>
           <span style={{ height: "3px", background: "white", borderRadius: "2px" }}></span>
         </div>
 
-        {/* User Icon */}
-        <div
-          style={{ cursor: "pointer", position: "relative" }}
-          onClick={() => setUserMenuOpen(!userMenuOpen)}
-        >
-          {/* Circle User Icon */}
+        {/* Company Name */}
+        <div style={{ fontSize: "1.8rem", fontWeight: "bold" }}>PayTech</div>
+
+        {/* Menu Dropdown */}
+        {menuOpen && (
           <div
             style={{
-              width: "35px",
-              height: "35px",
-              borderRadius: "50%",
+              position: "absolute",
+              top: "60px",
+              left: "10px",
               backgroundColor: "white",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
               color: "#0d6efd",
-              fontWeight: "bold",
-              fontSize: "1.2rem",
+              boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+              borderRadius: "8px",
+              overflow: "hidden",
+              minWidth: "160px",
             }}
           >
-            U
+            {[
+              { label: "Home", href: "#home" },
+              { label: "Features", href: "#features" },
+              { label: "About", href: "#about" },
+              { label: "Contact", href: "#contact" },
+              { label: "Login", href: "/login" },
+              { label: "Register", href: "/register" },
+            ].map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                style={{
+                  display: "block",
+                  padding: "10px 15px",
+                  textDecoration: "none",
+                  color: "#0d6efd",
+                  backgroundColor: "white",
+                  borderBottom: "1px solid #ddd",
+                }}
+                onClick={() => setMenuOpen(false)}
+              >
+                {item.label}
+              </a>
+            ))}
           </div>
+        )}
+      </div>
 
-          {/* Dropdown Menu */}
-          {userMenuOpen && (
-            <div
+      {/* Right: User Icon */}
+      <div style={{ position: "relative" }}>
+        <div
+          style={{
+            width: "35px",
+            height: "35px",
+            borderRadius: "50%",
+            backgroundColor: "white",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            color: "#0d6efd",
+            fontWeight: "bold",
+            fontSize: "1.2rem",
+            cursor: "pointer",
+          }}
+          onClick={() => setUserMenuOpen(!userMenuOpen)}
+        >
+          U
+        </div>
+
+        {userMenuOpen && (
+          <div
+            style={{
+              position: "absolute",
+              top: "45px",
+              right: 0,
+              backgroundColor: "white",
+              color: "#0d6efd",
+              boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+              borderRadius: "8px",
+              overflow: "hidden",
+              minWidth: "120px",
+            }}
+          >
+            <a
+              href="/login"
               style={{
-                position: "absolute",
-                top: "45px",
-                right: 0,
-                backgroundColor: "white",
+                display: "block",
+                padding: "10px 15px",
+                textDecoration: "none",
                 color: "#0d6efd",
-                boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
-                borderRadius: "8px",
-                overflow: "hidden",
-                minWidth: "120px",
               }}
             >
-              <button
-                style={{
-                  display: "block",
-                  width: "100%",
-                  padding: "10px 15px",
-                  border: "none",
-                  backgroundColor: "white",
-                  cursor: "pointer",
-                  textAlign: "left",
-                }}
-                onClick={() => alert("Login clicked")}
-              >
-                Login
-              </button>
-              <button
-                style={{
-                  display: "block",
-                  width: "100%",
-                  padding: "10px 15px",
-                  border: "none",
-                  backgroundColor: "white",
-                  cursor: "pointer",
-                  textAlign: "left",
-                }}
-                onClick={() => alert("Register clicked")}
-              >
-                Register
-              </button>
-            </div>
-          )}
-        </div>
+              Login
+            </a>
+            <a
+              href="/register"
+              style={{
+                display: "block",
+                padding: "10px 15px",
+                textDecoration: "none",
+                color: "#0d6efd",
+              }}
+            >
+              Register
+            </a>
+          </div>
+        )}
       </div>
     </header>
   );
