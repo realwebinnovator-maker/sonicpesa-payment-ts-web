@@ -19,20 +19,18 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
         justifyContent: "center",
         alignItems: "center",
         zIndex: 2000,
-        backdropFilter: "blur(6px)",
-        WebkitBackdropFilter: "blur(6px)",
       }}
     >
       <div
         className="auth-modal"
         style={{
-          backgroundColor: "#1e293b", // slate-800
+          backgroundColor: "#1e293b",
           color: "#f1f5f9",
-          borderRadius: "16px",
+          borderRadius: "12px",
           width: "90%",
-          maxWidth: "420px",
-          padding: "32px",
-          boxShadow: "0 20px 50px rgba(0, 0, 0, 0.4)",
+          maxWidth: "400px",
+          padding: "28px",
+          boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
           position: "relative",
           border: "1px solid #334155",
         }}
@@ -41,33 +39,19 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
           onClick={onClose}
           style={{
             position: "absolute",
-            top: "16px",
-            right: "16px",
-            background: "rgba(148, 163, 184, 0.1)",
+            top: "12px",
+            right: "12px",
+            background: "none",
             border: "none",
-            width: "32px",
-            height: "32px",
-            borderRadius: "50%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+            color: "#94a3b8",
+            fontSize: "1.4rem",
             cursor: "pointer",
-            color: "#cbd5e1",
-            fontSize: "1.2rem",
-            transition: "background 0.2s",
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(148, 163, 184, 0.2)")}
-          onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(148, 163, 184, 0.1)")}
         >
           &times;
         </button>
 
-        <div style={{ textAlign: "center", marginBottom: "28px" }}>
-          <h2 style={{ margin: 0, fontSize: "1.8rem", fontWeight: "700", color: "#f1f5f9" }}>
-            Welcome back
-          </h2>
-          <p style={{ color: "#94a3b8", marginTop: "6px" }}>Sign in to your PayTech dashboard</p>
-        </div>
+        <h2 style={{ margin: "0 0 20px", textAlign: "center", fontWeight: "700" }}>Sign In</h2>
 
         <form
           onSubmit={(e) => {
@@ -76,95 +60,52 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
             onClose();
           }}
         >
-          <div style={{ marginBottom: "20px" }}>
-            <label style={{ display: "block", marginBottom: "8px", fontWeight: "600", color: "#e2e8f0" }}>
-              Email Address
-            </label>
+          <div style={{ marginBottom: "16px" }}>
             <input
               type="email"
+              placeholder="Email"
               required
               style={{
                 width: "100%",
-                padding: "12px 14px",
-                background: "rgba(15, 23, 42, 0.6)", // slate-900/60
+                padding: "10px 12px",
+                background: "rgba(15,23,42,0.7)",
                 border: "1px solid #334155",
-                borderRadius: "10px",
-                fontSize: "1rem",
+                borderRadius: "8px",
                 color: "#f1f5f9",
-                outline: "none",
               }}
-              onFocus={(e) => (e.currentTarget.style.border = "1px solid #60a5fa")}
-              onBlur={(e) => (e.currentTarget.style.border = "1px solid #334155")}
             />
           </div>
-
-          <div style={{ marginBottom: "24px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
-              <label style={{ fontWeight: "600", color: "#e2e8f0" }}>Password</label>
-              <a
-                href="#"
-                style={{ color: "#818cf8", fontSize: "0.9rem", textDecoration: "none" }}
-                onClick={(e) => {
-                  e.preventDefault();
-                  alert("Password reset instructions sent.");
-                }}
-              >
-                Forgot?
-              </a>
-            </div>
+          <div style={{ marginBottom: "20px" }}>
             <input
               type="password"
+              placeholder="Password"
               required
               style={{
                 width: "100%",
-                padding: "12px 14px",
-                background: "rgba(15, 23, 42, 0.6)",
+                padding: "10px 12px",
+                background: "rgba(15,23,42,0.7)",
                 border: "1px solid #334155",
-                borderRadius: "10px",
-                fontSize: "1rem",
+                borderRadius: "8px",
                 color: "#f1f5f9",
-                outline: "none",
               }}
-              onFocus={(e) => (e.currentTarget.style.border = "1px solid #60a5fa")}
-              onBlur={(e) => (e.currentTarget.style.border = "1px solid #334155")}
             />
           </div>
-
           <button
             type="submit"
             style={{
               width: "100%",
-              padding: "13px",
-              background: "linear-gradient(90deg, #4f46e5, #60a5fa)",
+              padding: "10px",
+              background: "#4f46e5",
               color: "white",
               border: "none",
-              borderRadius: "10px",
-              fontSize: "1.05rem",
+              borderRadius: "8px",
               fontWeight: "600",
               cursor: "pointer",
-              transition: "opacity 0.3s",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}
-            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
           >
-            Sign In
+            Continue
           </button>
         </form>
-
-        <div style={{ textAlign: "center", marginTop: "24px", color: "#94a3b8", fontSize: "0.95rem" }}>
-          Don’t have an account?{" "}
-          <span
-            style={{
-              color: "#818cf8",
-              fontWeight: "600",
-              cursor: "pointer",
-              textDecoration: "underline",
-            }}
-            onClick={() => alert("Registration flow would open here.")}
-          >
-            Create one
-          </span>
-        </div>
       </div>
     </div>
   );
