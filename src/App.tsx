@@ -1,225 +1,128 @@
-import React from "react";
+import React, { useState } from "react";
 
 const App: React.FC = () => {
   return (
-    <div style={{ fontFamily: "Arial, sans-serif", color: "#333", lineHeight: 1.6 }}>
-      <Navbar />
-      <Hero />
-      <Features />
-      <About />
-      <CTA />
-      <Footer />
+    <div style={{ fontFamily: "Arial, sans-serif" }}>
+      <Header />
+      <main style={{ padding: "50px", textAlign: "center" }}>
+        <h1>Welcome to PayTech</h1>
+        <p>Your seamless payment integration solution.</p>
+      </main>
     </div>
   );
 };
 
-const Navbar: React.FC = () => (
-  <nav
-    style={{
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      padding: "15px 50px",
-      backgroundColor: "#0d6efd",
-      color: "white",
-      position: "sticky",
-      top: 0,
-      zIndex: 1000,
-    }}
-  >
-    <div style={{ fontWeight: "bold", fontSize: "1.5rem" }}>PayTech</div>
-    <ul
+const Header: React.FC = () => {
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+
+  return (
+    <header
       style={{
         display: "flex",
-        listStyle: "none",
-        gap: "25px",
-        margin: 0,
-        padding: 0,
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: "10px 30px",
+        backgroundColor: "#0d6efd",
+        color: "white",
+        position: "sticky",
+        top: 0,
+        zIndex: 1000,
+        boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
       }}
     >
-      <li><a href="#home" style={{ color: "white", textDecoration: "none" }}>Home</a></li>
-      <li><a href="#features" style={{ color: "white", textDecoration: "none" }}>Features</a></li>
-      <li><a href="#about" style={{ color: "white", textDecoration: "none" }}>About</a></li>
-      <li><a href="#contact" style={{ color: "white", textDecoration: "none" }}>Contact</a></li>
-    </ul>
-    <button
-      style={{
-        backgroundColor: "white",
-        color: "#0d6efd",
-        border: "none",
-        padding: "8px 16px",
-        borderRadius: "5px",
-        cursor: "pointer",
-        fontWeight: "bold",
-      }}
-    >
-      Get Started
-    </button>
-  </nav>
-);
+      {/* Company Name */}
+      <div style={{ fontSize: "1.8rem", fontWeight: "bold" }}>PayTech</div>
 
-const Hero: React.FC = () => (
-  <section
-    id="home"
-    style={{
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      textAlign: "center",
-      padding: "80px 20px",
-      backgroundColor: "#f8f9fa",
-    }}
-  >
-    <h1 style={{ fontSize: "3rem", marginBottom: "20px" }}>
-      Seamless Payment Integrations
-    </h1>
-    <p style={{ fontSize: "1.2rem", maxWidth: "600px", marginBottom: "30px" }}>
-      Connect your platform with multiple payment gateways easily, securely, and quickly.
-    </p>
-    <div style={{ display: "flex", gap: "15px", flexWrap: "wrap", justifyContent: "center" }}>
-      <button
-        style={{
-          padding: "12px 25px",
-          backgroundColor: "#0d6efd",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-          fontWeight: "bold",
-        }}
-      >
-        Explore
-      </button>
-      <button
-        style={{
-          padding: "12px 25px",
-          backgroundColor: "transparent",
-          border: "2px solid #0d6efd",
-          color: "#0d6efd",
-          borderRadius: "5px",
-          cursor: "pointer",
-          fontWeight: "bold",
-        }}
-      >
-        Learn More
-      </button>
-    </div>
-  </section>
-);
+      {/* Right Icons */}
+      <div style={{ display: "flex", alignItems: "center", gap: "20px", position: "relative" }}>
+        {/* Menu Icon */}
+        <div
+          style={{
+            width: "30px",
+            height: "30px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-around",
+            cursor: "pointer",
+          }}
+        >
+          <span style={{ height: "3px", background: "white", borderRadius: "2px" }}></span>
+          <span style={{ height: "3px", background: "white", borderRadius: "2px" }}></span>
+          <span style={{ height: "3px", background: "white", borderRadius: "2px" }}></span>
+        </div>
 
-const Features: React.FC = () => (
-  <section
-    id="features"
-    style={{
-      padding: "80px 20px",
-      backgroundColor: "white",
-      textAlign: "center",
-    }}
-  >
-    <h2 style={{ fontSize: "2.5rem", marginBottom: "50px" }}>Our Features</h2>
-    <div
-      style={{
-        display: "flex",
-        gap: "30px",
-        flexWrap: "wrap",
-        justifyContent: "center",
-      }}
-    >
-      <div
-        style={{
-          flex: "1 1 250px",
-          padding: "25px",
-          border: "1px solid #ddd",
-          borderRadius: "10px",
-          boxShadow: "0px 4px 8px rgba(0,0,0,0.1)",
-        }}
-      >
-        <h3>Fast Integration</h3>
-        <p>Integrate multiple payment gateways in minutes, not days.</p>
+        {/* User Icon */}
+        <div
+          style={{ cursor: "pointer", position: "relative" }}
+          onClick={() => setUserMenuOpen(!userMenuOpen)}
+        >
+          {/* Circle User Icon */}
+          <div
+            style={{
+              width: "35px",
+              height: "35px",
+              borderRadius: "50%",
+              backgroundColor: "white",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              color: "#0d6efd",
+              fontWeight: "bold",
+              fontSize: "1.2rem",
+            }}
+          >
+            U
+          </div>
+
+          {/* Dropdown Menu */}
+          {userMenuOpen && (
+            <div
+              style={{
+                position: "absolute",
+                top: "45px",
+                right: 0,
+                backgroundColor: "white",
+                color: "#0d6efd",
+                boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+                borderRadius: "8px",
+                overflow: "hidden",
+                minWidth: "120px",
+              }}
+            >
+              <button
+                style={{
+                  display: "block",
+                  width: "100%",
+                  padding: "10px 15px",
+                  border: "none",
+                  backgroundColor: "white",
+                  cursor: "pointer",
+                  textAlign: "left",
+                }}
+                onClick={() => alert("Login clicked")}
+              >
+                Login
+              </button>
+              <button
+                style={{
+                  display: "block",
+                  width: "100%",
+                  padding: "10px 15px",
+                  border: "none",
+                  backgroundColor: "white",
+                  cursor: "pointer",
+                  textAlign: "left",
+                }}
+                onClick={() => alert("Register clicked")}
+              >
+                Register
+              </button>
+            </div>
+          )}
+        </div>
       </div>
-      <div
-        style={{
-          flex: "1 1 250px",
-          padding: "25px",
-          border: "1px solid #ddd",
-          borderRadius: "10px",
-          boxShadow: "0px 4px 8px rgba(0,0,0,0.1)",
-        }}
-      >
-        <h3>Secure Transactions</h3>
-        <p>All payments are encrypted and PCI-compliant for full security.</p>
-      </div>
-      <div
-        style={{
-          flex: "1 1 250px",
-          padding: "25px",
-          border: "1px solid #ddd",
-          borderRadius: "10px",
-          boxShadow: "0px 4px 8px rgba(0,0,0,0.1)",
-        }}
-      >
-        <h3>Responsive Design</h3>
-        <p>Works seamlessly on mobile, tablet, and desktop devices.</p>
-      </div>
-    </div>
-  </section>
-);
-
-const About: React.FC = () => (
-  <section
-    id="about"
-    style={{
-      padding: "80px 20px",
-      backgroundColor: "#f8f9fa",
-      textAlign: "center",
-    }}
-  >
-    <h2 style={{ fontSize: "2.5rem", marginBottom: "20px" }}>About Us</h2>
-    <p style={{ maxWidth: "600px", margin: "0 auto" }}>
-      We are a team of developers passionate about building modern, secure, and scalable payment solutions for your business.
-    </p>
-  </section>
-);
-
-const CTA: React.FC = () => (
-  <section
-    id="contact"
-    style={{
-      padding: "80px 20px",
-      backgroundColor: "#0d6efd",
-      color: "white",
-      textAlign: "center",
-    }}
-  >
-    <h2 style={{ fontSize: "2.5rem", marginBottom: "30px" }}>Ready to Integrate Payments?</h2>
-    <button
-      style={{
-        padding: "15px 30px",
-        backgroundColor: "white",
-        color: "#0d6efd",
-        border: "none",
-        borderRadius: "5px",
-        fontWeight: "bold",
-        cursor: "pointer",
-      }}
-    >
-      Contact Us
-    </button>
-  </section>
-);
-
-const Footer: React.FC = () => (
-  <footer
-    style={{
-      padding: "30px 20px",
-      textAlign: "center",
-      backgroundColor: "#212529",
-      color: "white",
-    }}
-  >
-    <p>© {new Date().getFullYear()} PayTech. All rights reserved.</p>
-  </footer>
-);
+    </header>
+  );
+};
 
 export default App;
