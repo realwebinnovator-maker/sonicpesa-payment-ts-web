@@ -1,27 +1,116 @@
 // src/pages/Header.tsx
 import React, { useState, useEffect } from "react";
-import LoginModal from "../components/LoginModal";
+
+interface UserMenuProps {
+  onClose: () => void;
+}
+
+const UserMenu: React.FC<UserMenuProps> = ({ onClose }) => {
+  const menuItems = [
+    { name: "Login", href: "/pages/Login" },
+    { name: "Signup", href: "/pages/Signup" },
+    { name: "Reset Password", href: "/pages/ResetPassword" },
+  ];
+
+  return (
+    <>
+      {/* Overlay */}
+      <div
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          backgroundColor: "rgba(0,0,0,0.4)",
+          zIndex: 998,
+        }}
+        onClick={onClose}
+      />
+
+      {/* User Menu */}
+      <div
+        className="auth-modal"
+        style={{
+          position: "fixed",
+          top: "60px",
+          right: "20px",
+          width: "220px",
+          backgroundColor: "#1e293b",
+          color: "#f1f5f9",
+          borderRadius: "12px",
+          boxShadow: "0 8px 24px rgba(0,0,0,0.25)",
+          zIndex: 999,
+          display: "flex",
+          flexDirection: "column",
+          padding: "12px 0",
+        }}
+      >
+        {/* Close Button */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            padding: "0 12px 8px 0",
+            cursor: "pointer",
+            fontWeight: "bold",
+            color: "#f87171",
+          }}
+          onClick={onClose}
+        >
+          ✕
+        </div>
+
+        {/* Menu Items */}
+        {menuItems.map((item) => (
+          <a
+            key={item.name}
+            href={item.href}
+            style={{
+              padding: "10px 16px",
+              textDecoration: "none",
+              color: "#f1f5f9",
+              fontWeight: 600,
+              transition: "all 0.2s",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "rgba(148,163,184,0.15)")}
+            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
+            onClick={onClose}
+          >
+            {item.name}
+          </a>
+        ))}
+      </div>
+    </>
+  );
+};
 
 const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
 
-  // Funga menyu/modal ikiwa bofya nje
+  const navItems = [
+    { name: "Home", href: "/pages/Home" },
+    { name: "Features", href: "/pages/Features" },
+    { name: "Pricing", href: "/pages/Pricing" },
+    { name: "Docs", href: "/pages/Docs" },
+    { name: "Support", href: "/pages/Support" },
+    { name: "Contact", href: "/pages/Contact" },
+  ];
+
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      if (!target.closest('.menu-trigger') && !target.closest('.mobile-menu')) {
+      if (!target.closest(".menu-trigger") && !target.closest(".mobile-menu")) {
         setMobileMenuOpen(false);
       }
-      if (!target.closest('.user-icon') && !target.closest('.auth-modal')) {
-        setLoginModalOpen(false);
+      if (!target.closest(".user-icon") && !target.closest(".auth-modal")) {
+        setUserMenuOpen(false);
       }
     };
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
   }, []);
-
-  const navItems = ["Home", "Features", "Pricing", "Docs", "Support", "Contact"];
 
   return (
     <header
@@ -30,15 +119,15 @@ const Header: React.FC = () => {
         justifyContent: "space-between",
         alignItems: "center",
         padding: "16px 24px",
-        backgroundColor: "#0f172a", // slate-900
+        backgroundColor: "#0f172a",
         color: "#e2e8f0",
         position: "sticky",
         top: 0,
         zIndex: 1000,
-        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.25)",
+        boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
       }}
     >
-      {/* Kushoto: Hamburger Menu */}
+      {/* Hamburger Menu */}
       <div
         className="menu-trigger"
         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -64,7 +153,7 @@ const Header: React.FC = () => {
         ))}
       </div>
 
-      {/* Katikati: Logo */}
+      {/* Logo */}
       <div
         style={{
           fontSize: "1.8rem",
@@ -78,27 +167,27 @@ const Header: React.FC = () => {
         PayTech
       </div>
 
-      {/* Kulia: User Icon — SAHIHI SANA HAPA */}
+      {/* User Icon */}
       <div
-        className="user-icon" // ← HII NI MUHIMU KWA CLICK OUTSIDE
+        className="user-icon"
         onClick={(e) => {
-          e.stopPropagation(); // Zima propagation ili isifungue mobile menu
-          setLoginModalOpen(true);
+          e.stopPropagation();
+          setUserMenuOpen(!userMenuOpen);
         }}
         style={{
           width: "38px",
           height: "38px",
           borderRadius: "50%",
-          background: "rgba(148, 163, 184, 0.15)",
+          background: "rgba(148,163,184,0.15)",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           cursor: "pointer",
-          border: "1px solid rgba(148, 163, 184, 0.3)",
-          transition: "background 0.2s, transform 0.2s",
+          border: "1px solid rgba(148,163,184,0.3)",
+          transition: "all 0.2s",
         }}
-        onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(148, 163, 184, 0.25)")}
-        onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(148, 163, 184, 0.15)")}
+        onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(148,163,184,0.25)")}
+        onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(148,163,184,0.15)")}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -116,7 +205,7 @@ const Header: React.FC = () => {
         </svg>
       </div>
 
-      {/* Mobile Menu (Sidebar) */}
+      {/* Mobile Menu */}
       {mobileMenuOpen && (
         <>
           <div
@@ -126,7 +215,7 @@ const Header: React.FC = () => {
               left: 0,
               width: "100vw",
               height: "100vh",
-              backgroundColor: "rgba(0, 0, 0, 0.6)",
+              backgroundColor: "rgba(0,0,0,0.6)",
               zIndex: 998,
             }}
           />
@@ -150,8 +239,8 @@ const Header: React.FC = () => {
           >
             {navItems.map((item) => (
               <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
+                key={item.name}
+                href={item.href}
                 style={{
                   fontSize: "1.15rem",
                   fontWeight: "600",
@@ -161,19 +250,19 @@ const Header: React.FC = () => {
                   borderBottom: "1px solid #334155",
                   transition: "color 0.2s",
                 }}
-                onClick={() => setMobileMenuOpen(false)}
                 onMouseEnter={(e) => (e.currentTarget.style.color = "#818cf8")}
                 onMouseLeave={(e) => (e.currentTarget.style.color = "#e2e8f0")}
+                onClick={() => setMobileMenuOpen(false)}
               >
-                {item}
+                {item.name}
               </a>
             ))}
           </div>
         </>
       )}
 
-      {/* Login Modal — Inafunguliwa kwa click kwenye user icon */}
-      {loginModalOpen && <LoginModal onClose={() => setLoginModalOpen(false)} />}
+      {/* User Menu */}
+      {userMenuOpen && <UserMenu onClose={() => setUserMenuOpen(false)} />}
     </header>
   );
 };
