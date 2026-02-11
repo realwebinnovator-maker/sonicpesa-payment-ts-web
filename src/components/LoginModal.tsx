@@ -1,5 +1,5 @@
-// src/components/LoginModal.tsx
 import React from "react";
+import { ArrowLeft } from "lucide-react";
 
 interface LoginModalProps {
   onClose: () => void;
@@ -9,49 +9,63 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
   return (
     <div
       style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        height: "100vh",
-        backgroundColor: "rgba(0, 0, 0, 0.75)",
+        minHeight: "100vh",
+        width: "100%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        zIndex: 2000,
+        background:
+          "linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #0f172a 100%)",
+        position: "relative",
+        padding: "20px",
       }}
     >
-      <div
-        className="auth-modal"
+      {/* Back Button */}
+      <button
+        onClick={onClose}
         style={{
-          backgroundColor: "#1e293b",
-          color: "#f1f5f9",
-          borderRadius: "12px",
-          width: "90%",
-          maxWidth: "400px",
-          padding: "28px",
-          boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
-          position: "relative",
-          border: "1px solid #334155",
+          position: "absolute",
+          top: "25px",
+          left: "25px",
+          background: "rgba(255,255,255,0.05)",
+          border: "1px solid rgba(255,255,255,0.1)",
+          padding: "10px",
+          borderRadius: "50%",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "#cbd5e1",
+          transition: "0.3s ease",
         }}
       >
-        <button
-          onClick={onClose}
+        <ArrowLeft size={20} />
+      </button>
+
+      {/* Login Card */}
+      <div
+        style={{
+          width: "100%",
+          maxWidth: "420px",
+          padding: "40px 30px",
+          borderRadius: "16px",
+          backdropFilter: "blur(20px)",
+          background: "rgba(30, 41, 59, 0.75)",
+          border: "1px solid rgba(255,255,255,0.1)",
+          boxShadow: "0 20px 50px rgba(0,0,0,0.6)",
+          color: "#f1f5f9",
+        }}
+      >
+        <h2
           style={{
-            position: "absolute",
-            top: "12px",
-            right: "12px",
-            background: "none",
-            border: "none",
-            color: "#94a3b8",
-            fontSize: "1.4rem",
-            cursor: "pointer",
+            textAlign: "center",
+            marginBottom: "30px",
+            fontWeight: 700,
+            fontSize: "1.8rem",
           }}
         >
-          &times;
-        </button>
-
-        <h2 style={{ margin: "0 0 20px", textAlign: "center", fontWeight: "700" }}>Sign In</h2>
+          Welcome Back
+        </h2>
 
         <form
           onSubmit={(e) => {
@@ -60,52 +74,75 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
             onClose();
           }}
         >
-          <div style={{ marginBottom: "16px" }}>
-            <input
-              type="email"
-              placeholder="Email"
-              required
-              style={{
-                width: "100%",
-                padding: "10px 12px",
-                background: "rgba(15,23,42,0.7)",
-                border: "1px solid #334155",
-                borderRadius: "8px",
-                color: "#f1f5f9",
-              }}
-            />
-          </div>
+          {/* Email */}
           <div style={{ marginBottom: "20px" }}>
             <input
-              type="password"
-              placeholder="Password"
+              type="email"
+              placeholder="Enter your email"
               required
               style={{
                 width: "100%",
-                padding: "10px 12px",
-                background: "rgba(15,23,42,0.7)",
-                border: "1px solid #334155",
-                borderRadius: "8px",
-                color: "#f1f5f9",
+                padding: "12px 14px",
+                borderRadius: "10px",
+                border: "1px solid rgba(255,255,255,0.1)",
+                background: "rgba(15,23,42,0.8)",
+                color: "#fff",
+                outline: "none",
+                fontSize: "14px",
               }}
             />
           </div>
+
+          {/* Password */}
+          <div style={{ marginBottom: "25px" }}>
+            <input
+              type="password"
+              placeholder="Enter your password"
+              required
+              style={{
+                width: "100%",
+                padding: "12px 14px",
+                borderRadius: "10px",
+                border: "1px solid rgba(255,255,255,0.1)",
+                background: "rgba(15,23,42,0.8)",
+                color: "#fff",
+                outline: "none",
+                fontSize: "14px",
+              }}
+            />
+          </div>
+
+          {/* Button */}
           <button
             type="submit"
             style={{
               width: "100%",
-              padding: "10px",
-              background: "#4f46e5",
-              color: "white",
+              padding: "12px",
+              borderRadius: "10px",
               border: "none",
-              borderRadius: "8px",
-              fontWeight: "600",
+              background: "linear-gradient(90deg, #4f46e5, #7c3aed)",
+              color: "#fff",
+              fontWeight: 600,
               cursor: "pointer",
+              fontSize: "15px",
+              transition: "0.3s ease",
             }}
           >
-            Continue
+            Sign In
           </button>
         </form>
+
+        {/* Footer */}
+        <p
+          style={{
+            textAlign: "center",
+            marginTop: "20px",
+            fontSize: "13px",
+            color: "#94a3b8",
+          }}
+        >
+          Don't have an account? Sign up
+        </p>
       </div>
     </div>
   );
