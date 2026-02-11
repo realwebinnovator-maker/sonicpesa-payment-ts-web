@@ -1,26 +1,27 @@
 // src/pages/Header.tsx
 import React, { useState, useEffect } from "react";
-import LoginModal from "../components/LoginModal"; // Tutaunda hii
+import LoginModal from "../components/LoginModal";
 
 const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
 
-  // Funga modal ikiwa bofya nje
+  // Funga menyu/modal ikiwa bofya nje
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      if (!target.closest('.mobile-menu') && !target.closest('.menu-trigger')) {
+      if (!target.closest('.menu-trigger') && !target.closest('.mobile-menu')) {
         setMobileMenuOpen(false);
       }
       if (!target.closest('.auth-modal')) {
         setLoginModalOpen(false);
       }
     };
-
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
+
+  const navItems = ["Home", "Features", "Pricing", "Docs", "Support", "Contact"];
 
   return (
     <header
@@ -28,29 +29,26 @@ const Header: React.FC = () => {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        padding: "18px 24px",
-        backgroundColor: "rgba(255, 255, 255, 0.95)",
-        backdropFilter: "blur(12px)",
-        WebkitBackdropFilter: "blur(12px)",
+        padding: "16px 24px",
+        backgroundColor: "#0f172a", // slate-900
+        color: "#e2e8f0", // slate-200
         position: "sticky",
         top: 0,
         zIndex: 1000,
-        boxShadow: "0 2px 20px rgba(0, 0, 0, 0.06)",
-        borderBottom: "1px solid rgba(0, 0, 0, 0.03)",
+        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.25)",
       }}
     >
-      {/* Kushoto: Menu Icon (Mobile/Desktop) */}
+      {/* Kushoto: Hamburger Menu */}
       <div
         className="menu-trigger"
         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         style={{
           width: "28px",
-          height: "24px",
+          height: "22px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
           cursor: "pointer",
-          padding: "4px",
         }}
       >
         {[...Array(3)].map((_, i) => (
@@ -58,13 +56,9 @@ const Header: React.FC = () => {
             key={i}
             style={{
               height: "2px",
-              width: "100%",
-              background: "#1e293b",
+              background: "#cbd5e1", // slate-300
               borderRadius: "2px",
-              transition: "all 0.3s ease",
-              transform: mobileMenuOpen && i === 1 ? "rotate(45deg) translate(4px, 4px)" : undefined,
-              opacity: mobileMenuOpen && i === 1 ? 0 : 1,
-              transformOrigin: "left center",
+              transition: "all 0.3s",
             }}
           />
         ))}
@@ -73,9 +67,9 @@ const Header: React.FC = () => {
       {/* Katikati: Logo */}
       <div
         style={{
-          fontSize: "1.85rem",
+          fontSize: "1.8rem",
           fontWeight: "800",
-          background: "linear-gradient(90deg, #0d6efd, #4f46e5)",
+          background: "linear-gradient(90deg, #60a5fa, #818cf8, #a78bfa)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           letterSpacing: "-0.5px",
@@ -91,16 +85,16 @@ const Header: React.FC = () => {
           width: "38px",
           height: "38px",
           borderRadius: "50%",
-          background: "linear-gradient(135deg, #e0f2fe, #dbeafe)",
+          background: "rgba(148, 163, 184, 0.15)", // slate-400/15
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           cursor: "pointer",
-          border: "2px solid #bae6fd",
-          transition: "transform 0.2s, box-shadow 0.2s",
+          border: "1px solid rgba(148, 163, 184, 0.3)",
+          transition: "background 0.2s, transform 0.2s",
         }}
-        onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
-        onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+        onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(148, 163, 184, 0.25)")}
+        onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(148, 163, 184, 0.15)")}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -108,7 +102,7 @@ const Header: React.FC = () => {
           height="18"
           viewBox="0 0 24 24"
           fill="none"
-          stroke="#0d6efd"
+          stroke="#cbd5e1"
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -118,71 +112,93 @@ const Header: React.FC = () => {
         </svg>
       </div>
 
+      {/* Desktop Navigation (Hidden on mobile) */}
+      <nav
+        style={{
+          position: "absolute",
+          left: "50%",
+          transform: "translateX(-50%)",
+          display: "none",
+        }}
+      >
+        {navItems.map((item) => (
+          <a
+            key={item}
+            href={`#${item.toLowerCase()}`}
+            style={{
+              color: "#cbd5e1",
+              margin: "0 12px",
+              textDecoration: "none",
+              fontSize: "0.95rem",
+              fontWeight: "500",
+              transition: "color 0.2s",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "#818cf8")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "#cbd5e1")}
+          >
+            {item}
+          </a>
+        ))}
+      </nav>
+
       {/* Mobile Menu (Sidebar) */}
       {mobileMenuOpen && (
-        <div
-          className="mobile-menu"
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "280px",
-            height: "100vh",
-            backgroundColor: "white",
-            boxShadow: "4px 0 20px rgba(0,0,0,0.1)",
-            zIndex: 999,
-            padding: "80px 20px 30px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "20px",
-            animation: "slideIn 0.3s ease",
-          }}
-        >
-          {["Home", "Features", "Pricing", "Docs", "Support", "Contact"].map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              style={{
-                fontSize: "1.1rem",
-                fontWeight: "600",
-                color: "#1e293b",
-                textDecoration: "none",
-                padding: "10px 0",
-                borderBottom: "1px solid #f1f5f9",
-              }}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              {item}
-            </a>
-          ))}
-        </div>
-      )}
-
-      {/* Overlay for mobile menu */}
-      {mobileMenuOpen && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "rgba(0,0,0,0.4)",
-            zIndex: 998,
-          }}
-        />
+        <>
+          <div
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100vw",
+              height: "100vh",
+              backgroundColor: "rgba(0, 0, 0, 0.6)",
+              zIndex: 998,
+            }}
+          />
+          <div
+            className="mobile-menu"
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "280px",
+              height: "100vh",
+              backgroundColor: "#1e293b", // slate-800
+              color: "#f1f5f9",
+              padding: "80px 20px 30px",
+              display: "flex",
+              flexDirection: "column",
+              gap: "22px",
+              zIndex: 999,
+              boxShadow: "4px 0 20px rgba(0,0,0,0.4)",
+            }}
+          >
+            {navItems.map((item) => (
+              <a
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                style={{
+                  fontSize: "1.15rem",
+                  fontWeight: "600",
+                  color: "#e2e8f0",
+                  textDecoration: "none",
+                  padding: "12px 0",
+                  borderBottom: "1px solid #334155",
+                  transition: "color 0.2s",
+                }}
+                onClick={() => setMobileMenuOpen(false)}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "#818cf8")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "#e2e8f0")}
+              >
+                {item}
+              </a>
+            ))}
+          </div>
+        </>
       )}
 
       {/* Login Modal */}
       {loginModalOpen && <LoginModal onClose={() => setLoginModalOpen(false)} />}
-
-      {/* Animation for mobile menu */}
-      <style>{`
-        @keyframes slideIn {
-          from { transform: translateX(-100%); }
-          to { transform: translateX(0); }
-        }
-      `}</style>
     </header>
   );
 };
