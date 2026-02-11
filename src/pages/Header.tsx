@@ -1,20 +1,20 @@
-
 // src/pages/Header.tsx
 import React, { useState, useEffect } from "react";
+import LoginModal from "../components/LoginModal"; // Tutaunda hii
 
 const Header: React.FC = () => {
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const [authModalOpen, setAuthModalOpen] = useState<'login' | 'register' | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
 
-  // Funga menyu/modal ikiwa mtumiaji anabofya nje
+  // Funga modal ikiwa bofya nje
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      if (!target.closest('.user-menu-trigger') && !target.closest('.user-menu')) {
-        setUserMenuOpen(false);
+      if (!target.closest('.mobile-menu') && !target.closest('.menu-trigger')) {
+        setMobileMenuOpen(false);
       }
       if (!target.closest('.auth-modal')) {
-        setAuthModalOpen(null);
+        setLoginModalOpen(false);
       }
     };
 
@@ -28,117 +28,138 @@ const Header: React.FC = () => {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        padding: "16px 30px",
-        backgroundColor: "white",
-        color: "#1e293b",
+        padding: "18px 24px",
+        backgroundColor: "rgba(255, 255, 255, 0.95)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
         position: "sticky",
         top: 0,
         zIndex: 1000,
-        boxShadow: "0 2px 10px rgba(0,0,0,0.08)",
-        borderBottom: "1px solid #e2e8f0",
+        boxShadow: "0 2px 20px rgba(0, 0, 0, 0.06)",
+        borderBottom: "1px solid rgba(0, 0, 0, 0.03)",
       }}
     >
-      {/* Logo */}
-      <div style={{ fontSize: "1.75rem", fontWeight: "800", color: "#0d6efd" }}>PayTech</div>
-
-      {/* Desktop Navigation */}
-      <nav style={{ display: "flex", gap: "28px", fontWeight: "600" }}>
-        {["Home", "Features", "Pricing", "Docs", "Support"].map((item) => (
-          <a
-            key={item}
-            href={`#${item.toLowerCase()}`}
-            style={{
-              color: "#475569",
-              textDecoration: "none",
-              fontSize: "1rem",
-              transition: "color 0.2s",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#0d6efd")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "#475569")}
-          >
-            {item}
-          </a>
-        ))}
-      </nav>
-
-      {/* User Menu Trigger */}
+      {/* Kushoto: Menu Icon (Mobile/Desktop) */}
       <div
-        className="user-menu-trigger"
-        style={{ position: "relative", cursor: "pointer" }}
-        onClick={() => setUserMenuOpen(!userMenuOpen)}
+        className="menu-trigger"
+        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        style={{
+          width: "28px",
+          height: "24px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          cursor: "pointer",
+          padding: "4px",
+        }}
       >
-        <div
-          style={{
-            width: "40px",
-            height: "40px",
-            borderRadius: "50%",
-            backgroundColor: "#e0f2fe",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            color: "#0d6efd",
-            fontWeight: "bold",
-            fontSize: "1.1rem",
-            border: "2px solid #bae6fd",
-          }}
-        >
-          U
-        </div>
-
-        {userMenuOpen && (
-          <div
-            className="user-menu"
+        {[...Array(3)].map((_, i) => (
+          <span
+            key={i}
             style={{
-              position: "absolute",
-              top: "50px",
-              right: 0,
-              backgroundColor: "white",
-              boxShadow: "0 6px 16px rgba(0,0,0,0.12)",
-              borderRadius: "10px",
-              overflow: "hidden",
-              minWidth: "140px",
-              zIndex: 1001,
+              height: "2px",
+              width: "100%",
+              background: "#1e293b",
+              borderRadius: "2px",
+              transition: "all 0.3s ease",
+              transform: mobileMenuOpen && i === 1 ? "rotate(45deg) translate(4px, 4px)" : undefined,
+              opacity: mobileMenuOpen && i === 1 ? 0 : 1,
+              transformOrigin: "left center",
             }}
-          >
-            <div
-              style={{
-                display: "block",
-                padding: "12px 20px",
-                color: "#1e293b",
-                fontWeight: "500",
-                cursor: "pointer",
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                setAuthModalOpen('login');
-                setUserMenuOpen(false);
-              }}
-            >
-              Login
-            </div>
-            <div
-              style={{
-                display: "block",
-                padding: "12px 20px",
-                color: "#1e293b",
-                fontWeight: "500",
-                borderTop: "1px solid #e2e8f0",
-                cursor: "pointer",
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                setAuthModalOpen('register');
-                setUserMenuOpen(false);
-              }}
-            >
-              Register
-            </div>
-          </div>
-        )}
+          />
+        ))}
       </div>
 
-      {/* Auth Modal */}
-      {authModalOpen && (
+      {/* Katikati: Logo */}
+      <div
+        style={{
+          fontSize: "1.85rem",
+          fontWeight: "800",
+          background: "linear-gradient(90deg, #0d6efd, #4f46e5)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          letterSpacing: "-0.5px",
+        }}
+      >
+        PayTech
+      </div>
+
+      {/* Kulia: User Icon */}
+      <div
+        onClick={() => setLoginModalOpen(true)}
+        style={{
+          width: "38px",
+          height: "38px",
+          borderRadius: "50%",
+          background: "linear-gradient(135deg, #e0f2fe, #dbeafe)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          cursor: "pointer",
+          border: "2px solid #bae6fd",
+          transition: "transform 0.2s, box-shadow 0.2s",
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+        onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#0d6efd"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </div>
+
+      {/* Mobile Menu (Sidebar) */}
+      {mobileMenuOpen && (
+        <div
+          className="mobile-menu"
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "280px",
+            height: "100vh",
+            backgroundColor: "white",
+            boxShadow: "4px 0 20px rgba(0,0,0,0.1)",
+            zIndex: 999,
+            padding: "80px 20px 30px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "20px",
+            animation: "slideIn 0.3s ease",
+          }}
+        >
+          {["Home", "Features", "Pricing", "Docs", "Support", "Contact"].map((item) => (
+            <a
+              key={item}
+              href={`#${item.toLowerCase()}`}
+              style={{
+                fontSize: "1.1rem",
+                fontWeight: "600",
+                color: "#1e293b",
+                textDecoration: "none",
+                padding: "10px 0",
+                borderBottom: "1px solid #f1f5f9",
+              }}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {item}
+            </a>
+          ))}
+        </div>
+      )}
+
+      {/* Overlay for mobile menu */}
+      {mobileMenuOpen && (
         <div
           style={{
             position: "fixed",
@@ -146,143 +167,24 @@ const Header: React.FC = () => {
             left: 0,
             width: "100vw",
             height: "100vh",
-            backgroundColor: "rgba(0,0,0,0.5)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 2000,
+            backgroundColor: "rgba(0,0,0,0.4)",
+            zIndex: 998,
           }}
-        >
-          <div
-            className="auth-modal"
-            style={{
-              backgroundColor: "white",
-              padding: "30px",
-              borderRadius: "12px",
-              width: "90%",
-              maxWidth: "450px",
-              boxShadow: "0 10px 25px rgba(0,0,0,0.2)",
-            }}
-          >
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
-              <h2 style={{ margin: 0, color: "#1e293b" }}>
-                {authModalOpen === 'login' ? 'Sign In' : 'Create Account'}
-              </h2>
-              <button
-                onClick={() => setAuthModalOpen(null)}
-                style={{
-                  background: "none",
-                  border: "none",
-                  fontSize: "1.5rem",
-                  cursor: "pointer",
-                  color: "#94a3b8",
-                }}
-              >
-                &times;
-              </button>
-            </div>
-
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                alert(`${authModalOpen === 'login' ? 'Logging in...' : 'Registering...'}`);
-                setAuthModalOpen(null);
-              }}
-            >
-              {authModalOpen === 'register' && (
-                <div style={{ marginBottom: "15px" }}>
-                  <label style={{ display: "block", marginBottom: "6px", fontWeight: "500" }}>Full Name</label>
-                  <input
-                    type="text"
-                    required
-                    style={{
-                      width: "100%",
-                      padding: "10px",
-                      border: "1px solid #cbd5e1",
-                      borderRadius: "6px",
-                      fontSize: "1rem",
-                    }}
-                  />
-                </div>
-              )}
-
-              <div style={{ marginBottom: "15px" }}>
-                <label style={{ display: "block", marginBottom: "6px", fontWeight: "500" }}>Email</label>
-                <input
-                  type="email"
-                  required
-                  style={{
-                    width: "100%",
-                    padding: "10px",
-                    border: "1px solid #cbd5e1",
-                    borderRadius: "6px",
-                    fontSize: "1rem",
-                  }}
-                />
-              </div>
-
-              <div style={{ marginBottom: "20px" }}>
-                <label style={{ display: "block", marginBottom: "6px", fontWeight: "500" }}>Password</label>
-                <input
-                  type="password"
-                  required
-                  style={{
-                    width: "100%",
-                    padding: "10px",
-                    border: "1px solid #cbd5e1",
-                    borderRadius: "6px",
-                    fontSize: "1rem",
-                  }}
-                />
-              </div>
-
-              <button
-                type="submit"
-                style={{
-                  width: "100%",
-                  padding: "12px",
-                  backgroundColor: "#0d6efd",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "8px",
-                  fontSize: "1rem",
-                  fontWeight: "600",
-                  cursor: "pointer",
-                }}
-              >
-                {authModalOpen === 'login' ? 'Sign In' : 'Create Account'}
-              </button>
-            </form>
-
-            <div style={{ textAlign: "center", marginTop: "20px", color: "#64748b" }}>
-              {authModalOpen === 'login' ? (
-                <p>
-                  Don't have an account?{' '}
-                  <span
-                    onClick={() => setAuthModalOpen('register')}
-                    style={{ color: "#0d6efd", cursor: "pointer", textDecoration: "underline" }}
-                  >
-                    Sign up
-                  </span>
-                </p>
-              ) : (
-                <p>
-                  Already have an account?{' '}
-                  <span
-                    onClick={() => setAuthModalOpen('login')}
-                    style={{ color: "#0d6efd", cursor: "pointer", textDecoration: "underline" }}
-                  >
-                    Sign in
-                  </span>
-                </p>
-              )}
-            </div>
-          </div>
-        </div>
+        />
       )}
+
+      {/* Login Modal */}
+      {loginModalOpen && <LoginModal onClose={() => setLoginModalOpen(false)} />}
+
+      {/* Animation for mobile menu */}
+      <style>{`
+        @keyframes slideIn {
+          from { transform: translateX(-100%); }
+          to { transform: translateX(0); }
+        }
+      `}</style>
     </header>
   );
 };
 
-// ✅ HII NI MUHIMU SANA!
 export default Header;
